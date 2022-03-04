@@ -1,0 +1,33 @@
+<%- include('../partials/html-head') %>
+<%- include('../partials/nav') %>
+
+<section>
+	<p>From the kitchen of <%= taco.owner.name %>...</p>
+  <h1><%= taco.name %> 🌮</h1>
+  <h2>This taco is <%= taco.tasty ? 'tasty! 😋' : 'not tasty! 😫' %></h2>
+  <% if (user) { %>
+    <form action="/tacos/<%= taco._id %>/flip-tasty?_method=PATCH"
+          method="POST"
+    >
+      <button type="submit">
+        Make Taco <%= taco.tasty ? 'not tasty 🤭' : 'tasty 😊' %> 
+      </button>
+    </form>
+  <% } %>
+
+  <% if (taco.owner.equals(user?.profile._id)) { %>
+    <form action="/tacos/<%= taco._id %>/edit"
+          method="GET"
+    >
+      <button class="btn" type="submit">Edit This Taco 🔨</button>
+    </form>
+    <form 
+      action="/tacos<%= taco._id %>/?_method=DELETE"
+      method="POST"
+    >
+      <button class="btn" type="submit">Eat This Taco!🌮🤫</button>
+    </form>
+  <% } %>
+</section>
+
+<%- include('../partials/footer') %>
